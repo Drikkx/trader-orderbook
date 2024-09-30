@@ -18,28 +18,41 @@ export const notifyEventListener = (bot: Client) => {
                 // Récupérer le canal en utilisant l'ID
                 const channel = await bot.channels.fetch(channelId) as TextChannel;
 
-                // // Créer un nouveau message intégré
-                // const embed = new EmbedBuilder()
-                //     .setColor(0x0099FF)
-                //     .setTitle('Market Listing')
-                //     .setDescription(data.message)
-                //     .setTimestamp()
+                // Créer un nouveau message intégré
+                const embed = new EmbedBuilder()
+                    .setColor(0x0099FF)
+                    .setTitle('Market Listing')
+                    .setTimestamp()
 
-                // embed.addFields(
-                //     {
-                //         name: `Score: ${data.user.score}`, value: `<@${data.user.discordId}>`
-                //     },
-                // )
+                embed.addFields(
+                    {
+                        name: `Type`, value: `${data.order.nft_type}`
+                    },
+                )
 
-                // const fields = Object.entries(data.stats).map(([key, value]) => {
-                //     return { name: String(key), value: String(value), inline: false }
-                // })
+                embed.addFields(
+                    {
+                        name: `Asset`, value: `${data.order.nft_token}`
+                    },
+                )
 
-                // embed.addFields(...fields)
+                embed.addFields(
+                    {
+                        name: `Asset`, value: `${data.order.nft_token_id}`
+                    },
+                )
 
-                // // Envoyer le message intégré au canal
-                // await channel.send({ embeds: [embed] });
-                await channel.send(JSON.stringify(data.order))
+                if (data.order.nft_type === 'erc1155') {
+
+                embed.addFields(
+                    {
+                        name: `Amount`, value: `${data.order.nft_token_amount}`
+                    },
+                )
+                }
+
+                // Envoyer le message intégré au canal
+                await channel.send({ embeds: [embed] });
                 console.log('Message envoyé dans le canal Discord.');
             } else {
                 throw new Error('L\'ID du canal n\'est pas défini dans les variables d\'environnement.');
