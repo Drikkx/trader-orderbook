@@ -53,8 +53,7 @@ export const notifyEventListener = (bot: Client) => {
                     .setTitle('Market Listing')
                     .setTimestamp()
 
-                let price = (Number(data.order.erc20_token_amount) / (10 ** 18))
-                let price_fees = price + (price * 0.05)
+                let price = (Number(data.order.erc20_token_amount) + (Number(data.order.fees![0].amount))) / (10 ** 18)
                 if (data.order.nft_type === 'ERC1155') {
 
                     embed.addFields(
@@ -71,7 +70,7 @@ export const notifyEventListener = (bot: Client) => {
 
                     embed.addFields(
                         {
-                            name: `Price`, value: `${(price_fees).toFixed(6)}`
+                            name: `Price`, value: `${(price).toFixed(6)}`
                         },
                     )
                 } else {
@@ -83,7 +82,7 @@ export const notifyEventListener = (bot: Client) => {
 
                     embed.addFields(
                         {
-                            name: `Price`, value: `${(price_fees).toFixed(6)}`
+                            name: `Price`, value: `${(price).toFixed(6)}`
                         },
                     )
                 }
