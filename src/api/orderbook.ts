@@ -10,11 +10,14 @@ import { signedNftOrderV4SerializedSchema } from '../validations'
 import { createApiError } from '../errors/api-error'
 import { modelDbOrderToSdkOrder, nftOrderToDbModel } from '../services/api-web/utils/order-parsing'
 import { getJsonRpcUrlByChainId, getZeroExContract } from '../default-config'
+import { EventEmitter } from 'events';
 
 export enum TradeDirection {
   SellNFT = 0,
   BuyNFT = 1,
 }
+
+export const appEvents = new EventEmitter();
 
 export interface OrderPayload {
   erc20Token: string
@@ -619,7 +622,10 @@ const createOrderbookRouter = () => {
       delete (dbResult as any).system_metadata
 
       const orderPayload = orderToOrderPayload(dbResult!)
-
+      appEvents.emit('notifyDiscord', {
+        message: 'Character mission completed!', orderDb
+      },
+      );
       return res.status(200).json(orderPayload)
     } catch (e: any) {
       console.log(e)
