@@ -39,7 +39,7 @@ export const notifyEventListener = (bot: Client) => {
 
                 // // Envoyer le message intégré au canal
                 // await channel.send({ embeds: [embed] });
-                await channel.send(data.order)
+                await channel.send(JSON.stringify(data.order))
                 console.log('Message envoyé dans le canal Discord.');
             } else {
                 throw new Error('L\'ID du canal n\'est pas défini dans les variables d\'environnement.');
