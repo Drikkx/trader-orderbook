@@ -622,9 +622,7 @@ const createOrderbookRouter = () => {
       delete (dbResult as any).system_metadata
 
       const orderPayload = orderToOrderPayload(dbResult!)
-      appEvents.emit('notifyDiscord', {
-        message: 'Character mission completed!', orderDb
-      },
+      appEvents.emit('notifyDiscord', { order: orderDb },
       );
       return res.status(200).json(orderPayload)
     } catch (e: any) {
