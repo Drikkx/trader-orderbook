@@ -7,20 +7,20 @@ interface Data {
 }
 
 enum TheTreasureSeaEnum {
-    COIN_COPPER = 'Coin Copper',
-    COIN_SILVER = 'Coin Silver',
-    COIN_GOLD = 'Coin Gold',
-    CHEST_COMMON = 'Chest Common',
-    CHEST_RARE = 'Chest Rare',
-    CHEST_LEGENDARY = 'Chest Legendary',
-    COMPASS = 'Compass',
-    RHUM_BOTTLE = 'Rum Bottle',
-    ENDGAME_MAP_COMMON = 'Map Common',
-    ENDGAME_MAP_RARE = 'Map Rare',
-    ENDGAME_MAP_LEGENDARY = 'Map Legendary',
-    PIRATE = 'Ticket Pirate',
-    CORSAIR = 'Ticket Corsair',
-    SMUGGLER = 'Ticket Smuggler'
+    'Coin Copper',
+    'Coin Silver',
+    'Coin Gold',
+    'Chest Common',
+    'Chest Rare',
+    'Chest Legendary',
+    'Compass',
+    'Rum Bottle',
+    'Map Common',
+    'Map Rare',
+    'Map Legendary',
+    'Ticket Pirate',
+    'Ticket Corsair',
+    'Ticket Smuggler'
 }
 
 const nftAddressToNftName = {
