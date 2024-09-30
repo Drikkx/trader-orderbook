@@ -59,10 +59,10 @@ export const notifyEventListener = (bot: Client) => {
 
                     embed.addFields(
                         {
-                            name: `Asset`, value: `${TheTreasureSeaEnum[data.order.nft_token_id]}`
+                            name: `Asset`, value: `${TheTreasureSeaEnum[Number(data.order.nft_token_id)]}`
                         },
                     )
-                    console.log(TheTreasureSeaEnum[data.order.nft_token_id])
+                    console.log(TheTreasureSeaEnum[Number(data.order.nft_token_id)])
                     embed.addFields(
                         {
                             name: `Amount`, value: `${data.order.nft_token_amount}`
