@@ -53,6 +53,8 @@ export const notifyEventListener = (bot: Client) => {
                     .setTitle('Market Listing')
                     .setTimestamp()
 
+                let price = (Number(data.order.erc20_token_amount) / (10 ** 18))
+                let price_fees = price + (price * 0.05)
                 if (data.order.nft_type === 'ERC1155') {
 
                     embed.addFields(
@@ -60,7 +62,7 @@ export const notifyEventListener = (bot: Client) => {
                             name: `Asset`, value: `${TheTreasureSeaEnum[data.order.nft_token_id]}`
                         },
                     )
-
+                    console.log(TheTreasureSeaEnum[data.order.nft_token_id])
                     embed.addFields(
                         {
                             name: `Amount`, value: `${data.order.nft_token_amount}`
@@ -69,7 +71,7 @@ export const notifyEventListener = (bot: Client) => {
 
                     embed.addFields(
                         {
-                            name: `Price`, value: `${(Number(data.order.erc20_token_amount) / (10 ** 18)).toFixed(6)}`
+                            name: `Price`, value: `${(price_fees).toFixed(6)}`
                         },
                     )
                 } else {
@@ -81,7 +83,7 @@ export const notifyEventListener = (bot: Client) => {
 
                     embed.addFields(
                         {
-                            name: `Price`, value: `${(Number(data.order.erc20_token_amount) / (10 ** 18)).toFixed(6)}`
+                            name: `Price`, value: `${(price_fees).toFixed(6)}`
                         },
                     )
                 }
