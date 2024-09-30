@@ -6,6 +6,35 @@ interface Data {
     order: NftOrderV4DatabaseModel
 }
 
+enum TheTreasureSeaEnum {
+    COIN_COPPER = 'Coin Copper',
+    COIN_SILVER = 'Coin Silver',
+    COIN_GOLD = 'Coin Gold',
+    CHEST_COMMON = 'Chest Common',
+    CHEST_RARE = 'Chest Rare',
+    CHEST_LEGENDARY = 'Chest Legendary',
+    COMPASS = 'Compass',
+    RHUM_BOTTLE = 'Rum Bottle',
+    ENDGAME_MAP_COMMON = 'Map Common',
+    ENDGAME_MAP_RARE = 'Map Rare',
+    ENDGAME_MAP_LEGENDARY = 'Map Legendary',
+    PIRATE = 'Ticket Pirate',
+    CORSAIR = 'Ticket Corsair',
+    SMUGGLER = 'Ticket Smuggler'
+}
+
+const nftAddressToNftName = {
+    '0x176eC150950aecDC19B30721EAAf6124B34Fc816': 'Recruiter',
+    '0xE0515a8E55788315ABBf356a8F4a925FCBe45ec2': 'Tavern',
+    '0x7b1A00e4e8265A99ecE67077b2027f74f02996A9': 'Brothel',
+    '0x75C02EF8D64F3C12f36f40f6CD48943A1020307C': 'Forge',
+    '0x0C9F75C9333275B4A774c8B5b2Bb4c5dC929E5D0': 'Shipyard',
+    '0x1Be33be2cD83793184250b30B91fA2d76246AA27': 'Character',
+    '0x6b71c274bEFF4eB912af28c25Ed93f0E5256De11': 'Ship',
+    '0xe23a53924A94AE48f484A3195f37AAf5B00b134B': 'Gear',
+    '0x83eBFF5DF4427c3b539904446200598e3DB41f69': 'Stuff',
+}
+
 export const notifyEventListener = (bot: Client) => {
     console.log('notifyEventListener started')
 
@@ -24,31 +53,37 @@ export const notifyEventListener = (bot: Client) => {
                     .setTitle('Market Listing')
                     .setTimestamp()
 
-                embed.addFields(
-                    {
-                        name: `Type`, value: `${data.order.nft_type}`
-                    },
-                )
+                if (data.order.nft_type === 'ERC1155') {
 
-                embed.addFields(
-                    {
-                        name: `Asset`, value: `${data.order.nft_token}`
-                    },
-                )
+                    embed.addFields(
+                        {
+                            name: `Asset`, value: `${TheTreasureSeaEnum[data.order.nft_token_id]}`
+                        },
+                    )
 
-                embed.addFields(
-                    {
-                        name: `Asset`, value: `${data.order.nft_token_id}`
-                    },
-                )
+                    embed.addFields(
+                        {
+                            name: `Amount`, value: `${data.order.nft_token_amount}`
+                        },
+                    )
 
-                if (data.order.nft_type === 'erc1155') {
+                    embed.addFields(
+                        {
+                            name: `Price`, value: `${(Number(data.order.erc20_token_amount) / (10 ** 18)).toFixed(6)}`
+                        },
+                    )
+                } else {
+                    embed.addFields(
+                        {
+                            name: `Asset`, value: `${nftAddressToNftName[data.order.nft_token]}`
+                        },
+                    )
 
-                embed.addFields(
-                    {
-                        name: `Amount`, value: `${data.order.nft_token_amount}`
-                    },
-                )
+                    embed.addFields(
+                        {
+                            name: `Price`, value: `${(Number(data.order.erc20_token_amount) / (10 ** 18)).toFixed(6)}`
+                        },
+                    )
                 }
 
                 // Envoyer le message intégré au canal

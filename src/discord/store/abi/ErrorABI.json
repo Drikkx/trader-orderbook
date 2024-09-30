@@ -1,0 +1,477 @@
+[
+  {
+    "inputs": [],
+    "name": "AddressAlreadyAdd",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AddressAlreadyRemove",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AlreadyHasBlacksmith",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AlreadyHasCaptain",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AlreadyHaveShipwrigth",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AlreadyHunting",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AlreadyInitialized",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AlreadyRent",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AlreadyToMint",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AmountBeforeBurn",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AmountTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ApprovalToOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ApproveToCaller",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BrothelAlreadyHasWhoremonger",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BrothelIsNotActive",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CallerIsNotOwnerOrApproved",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CaptainAlreadyMintShip",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CharacterExpTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CharacterLevelNotAllowed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ConsecutiveTransfer",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "DurabilityTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ERC721ReceiverReject",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ExpTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "FailedToSendEth",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "FlagRoyaltyTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ForgeIsNotActive",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ForgeIsPrivate",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ForgeToLowForThisRarity",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "GasTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "HuntIsNotActive",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "HuntIsNotAllowedByOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "IdNotAllowed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "IndexOutOfBounds",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidTokenId",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "LimitPrivateAddressReach",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MaxHuntReach",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MaxMintAllowedReach",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MaxNumberOfMintReach",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MaxReach",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MintToZeroAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MissingCraftman",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NeedCaptain",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NeedToHaveBoss",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NeedToHaveShipwrigth",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NeedToHaveWhoremonger",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotAllowed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotApprovedOrOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotWhitelisted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotYetAllowedToMint",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PremiumNotSet",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PrivateBrothel",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "RentingTimeNotEnding",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ReserveRhum",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ReserveRhumTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ShareValueWrong",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ShipIsNotTraveling",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ShipIsShielded",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ShipIsTraveling",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ShipYardIsPrivate",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ShipyardIsNotActive",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ShipyardTooLowForThisRarity",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SpeNotAllowed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "StuffTooHigh",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TargetIsTheAttacker",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TargetUnderAttack",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ThisTargetIsYourShip",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ThristPointTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ToEarly",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TokenAlreadyMinted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TokenNotMinted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TooMuchAtOnce",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TransferFailed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TransferFromIncorrectOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TransferToNonERC721Receiver",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TransferToNonErc721Receiver",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TransferToZeroAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "Unauthorized",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UnderMinimumPoint",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UnderMint",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UsageBeforeRetireTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UserUnderMint",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "WaitYourOtherShip",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YouAreNotOwnerOfBrothel",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YouAreNotOwnerOfCharacter",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YouAreNotOwnerOfForge",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YouAreNotOwnerOfGear",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YouAreNotOwnerOfShip",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YouAreNotOwnerOfShipYard",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YouAreNotOwnerOfStuff",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YouAreNotOwnerOfTokenId",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YourAreNotOwnerOfCharacter",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YourAreNotOwnerOfShip",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YourAreNotRenterOfCharacter",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "YourCharacterCatchGonorrhoea",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ZeroAddress",
+    "type": "error"
+  }
+]
