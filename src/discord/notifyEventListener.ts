@@ -1,6 +1,8 @@
 import { Client, EmbedBuilder, TextChannel } from 'discord.js';
 import { appEvents } from '../api/orderbook';
 import { NftOrderV4DatabaseModel } from '../types-complex';
+import StepAsset from '../discord/store/contracts/StepAsset.json'
+import { forEach } from 'lodash';
 
 interface Data {
     order: NftOrderV4DatabaseModel
@@ -23,16 +25,18 @@ enum TheTreasureSeaEnum {
     'Ticket Smuggler'
 }
 
-const nftAddressToNftName = {
-    '0x176eC150950aecDC19B30721EAAf6124B34Fc816': 'Recruiter',
-    '0xE0515a8E55788315ABBf356a8F4a925FCBe45ec2': 'Tavern',
-    '0x7b1A00e4e8265A99ecE67077b2027f74f02996A9': 'Brothel',
-    '0x75C02EF8D64F3C12f36f40f6CD48943A1020307C': 'Forge',
-    '0x0C9F75C9333275B4A774c8B5b2Bb4c5dC929E5D0': 'Shipyard',
-    '0x1Be33be2cD83793184250b30B91fA2d76246AA27': 'Character',
-    '0x6b71c274bEFF4eB912af28c25Ed93f0E5256De11': 'Ship',
-    '0xe23a53924A94AE48f484A3195f37AAf5B00b134B': 'Gear',
-    '0x83eBFF5DF4427c3b539904446200598e3DB41f69': 'Stuff',
+const getContractName = (contractAddress: string) => {
+    const contract = contractAddress.toLowerCase()
+    if (contract === StepAsset.nftBrothelAddress.toLowerCase()) return 'Brothel'
+    else if (contract === StepAsset.nftCharacterAddress.toLowerCase()) return 'Character'
+    else if (contract === StepAsset.nftCollectibleAddress.toLowerCase()) return 'Recruiter'
+    else if (contract === StepAsset.nftForgesAddress.toLowerCase()) return 'Forge'
+    else if (contract === StepAsset.nftGearAddress.toLowerCase()) return 'Gear'
+    else if (contract === StepAsset.nftShipAddress.toLowerCase()) return 'Ship'
+    else if (contract === StepAsset.nftShipyardsAddress.toLowerCase()) return 'Shipyard'
+    else if (contract === StepAsset.nftStuffAddress.toLowerCase()) return 'Stuff'
+    else if (contract === StepAsset.nftTavernAddress.toLowerCase()) return 'Tavern'
+    else return undefined
 }
 
 export const notifyEventListener = (bot: Client) => {
@@ -61,7 +65,7 @@ export const notifyEventListener = (bot: Client) => {
                             name: `Asset`, value: `${TheTreasureSeaEnum[Number(data.order.nft_token_id)]}`
                         },
                     )
-                    console.log(TheTreasureSeaEnum[Number(data.order.nft_token_id)])
+
                     embed.addFields(
                         {
                             name: `Amount`, value: `${data.order.nft_token_amount}`
@@ -76,7 +80,7 @@ export const notifyEventListener = (bot: Client) => {
                 } else {
                     embed.addFields(
                         {
-                            name: `Asset`, value: `${nftAddressToNftName[data.order.nft_token]}`
+                            name: `Asset`, value: `${getContractName(data.order.nft_token)}`
                         },
                     )
 
