@@ -3,6 +3,7 @@ import { addresses } from './addresses'
 export const CHAIN_IDS = {
   MAINNET: '1',
   SKALE_TESTNET: '974399131',
+  NEBULA_TESTNET: '37084624'
 }
 
 export const CHAIN_IDS_NAMES = {
@@ -15,6 +16,7 @@ const WS_RPC = {
   [CHAIN_IDS.MAINNET]: process.env.RPC_MAINNET,
   // SKALE_TESTNET
   [CHAIN_IDS.SKALE_TESTNET]: process.env.RPC_SKALE_TESTNET,
+  [CHAIN_IDS.NEBULA_TESTNET]: process.env.RPC_NEBULA_TESTNET
 }
 
 const JSON_RPC = {
@@ -22,6 +24,7 @@ const JSON_RPC = {
   [CHAIN_IDS.MAINNET]: process.env.RPC_MAINNET,
   // SKALE_TESTNET
   [CHAIN_IDS.SKALE_TESTNET]: process.env.RPC_SKALE_TESTNET,
+  [CHAIN_IDS.NEBULA_TESTNET]: process.env.RPC_NEBULA_TESTNET
 }
 
 const getZeroExContract = (chainId: string): string => {
