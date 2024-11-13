@@ -27,6 +27,7 @@ enum TheTreasureSeaEnum {
 
 const getContractName = (contractAddress: string) => {
     const contract = contractAddress.toLowerCase()
+    console.log("Contract Address : " + contract)
     if (contract === StepAsset.nftBrothelAddress.toLowerCase()) return 'Brothel'
     else if (contract === StepAsset.nftCharacterAddress.toLowerCase()) return 'Character'
     else if (contract === StepAsset.nftCollectibleAddress.toLowerCase()) return 'Recruiter'
@@ -36,7 +37,7 @@ const getContractName = (contractAddress: string) => {
     else if (contract === StepAsset.nftShipyardsAddress.toLowerCase()) return 'Shipyard'
     else if (contract === StepAsset.nftStuffAddress.toLowerCase()) return 'Stuff'
     else if (contract === StepAsset.nftTavernAddress.toLowerCase()) return 'Tavern'
-    else return undefined
+    else return null
 }
 
 export const notifyEventListener = (bot: Client) => {
@@ -46,6 +47,8 @@ export const notifyEventListener = (bot: Client) => {
 
     appEvents.on('notifyDiscord', async (data: Data) => {
         try {
+            const contractName = getContractName(data.order.nft_token)
+            if (contractName === null) return;
             // Vérifiez que l'ID du canal est bien une chaîne
             if (typeof channelId === 'string') {
                 // Récupérer le canal en utilisant l'ID
