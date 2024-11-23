@@ -1,17 +1,10 @@
 import { bootstrapApp } from './app';
 import http2 from 'http2';
-import fs from 'fs';
-
-// SSL/TLS configuration
-const options = {
-    key: fs.readFileSync('server-key.pem'),
-    cert: fs.readFileSync('server-cert.pem')
-  };
 
 export async function startApi() {
   const app = await bootstrapApp();
   
-  const server = http2.createSecureServer(options);
+  const server = http2.createSecureServer();
 
   const port = process.env.PORT || 5000;
 
