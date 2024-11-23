@@ -5,37 +5,41 @@ import compression from 'compression';
 import bodyParser from 'body-parser';
 import cron from 'node-cron';
 import { createOrderbookRouter } from '../../api/orderbook';
-import { getLoggerForService, ServiceNamesLogLabel } from '../../logger';
 import { checkAndUpdateAllOrderStatuses } from '../../api/status-order-check';
 import { cleanUpClosedOrders } from '../../api/clean-db';
 import { startEventListeners } from '../../api/events-listener';
 import rateLimit from 'express-rate-limit';
-import http2Express from 'http2-express-bridge'; // Make sure to import this
-
-const logger = getLoggerForService(ServiceNamesLogLabel['api-web']);
 
 const bootstrapApp = async () => {
-  const isProduction = process.env.NODE_ENV === 'production';
-  logger.debug('Initializing API web service express app...', { isProduction });
 
-  // Use http2Express to create an app that's HTTP/2 compatible
-  const app = http2Express(express);
+  const app = express();
 
   app.use(helmet());
   app.enable('trust proxy');
   app.use(compression());
   app.use(express.json());
-  app.use(cors());
+
+  // CORS configuration to whitelist a single domain
+  app.use(cors({
+    origin: function (origin, callback) {
+      if (isAllowedOrigin(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }
+  }));
+
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
 
   // Rate Limiter
   const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per windowMs
+    windowMs: 15 * 60 * 1000,
+    max: 100,
     standardHeaders: true,
     legacyHeaders: false,
-    keyGenerator: (req: express.Request) => {
+    keyGenerator: (req) => {
       const forwarded = req.headers['x-forwarded-for'];
       const ip = Array.isArray(forwarded) ? forwarded[0] : forwarded;
       return ip || req.socket.remoteAddress || 'default';
@@ -43,6 +47,15 @@ const bootstrapApp = async () => {
   });
 
   app.use(limiter);
+
+  // Function to check if the origin is in the whitelist
+  function isAllowedOrigin(origin) {
+    // List of domains that are allowed (whitelist)
+    const allowedDomains = ['testnet.forlootandglory.io','game.forlootandglory.io']; // Add the domain you want to allow here
+    if (!origin) return false; 
+    const originDomain = new URL(origin).hostname;
+    return allowedDomains.includes(originDomain);
+  }
 
   // Basic Healthchecks
   app.get('/', (_, res) => res.sendStatus(200));
@@ -53,13 +66,8 @@ const bootstrapApp = async () => {
   app.use('/orderbook', createOrderbookRouter());
 
   cron.schedule('0 0 * * *', async () => {
-    await checkAndUpdateAllOrderStatuses().then(() => {
-      console.log('Daily order status update task executed.');
-    });
-
-    await cleanUpClosedOrders().then(() => {
-      console.log('Daily closed order cleanup task executed.');
-    });
+    await checkAndUpdateAllOrderStatuses().then(() => console.log('Daily order status update task executed.'));
+    await cleanUpClosedOrders().then(() => console.log('Daily closed order cleanup task executed.'));
   });
 
   startEventListeners();
@@ -72,10 +80,8 @@ const bootstrapApp = async () => {
   });
 
   app.use((error: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-    res.status(error.status || 500).json({ ...error });
+    res.status(error.status || 403).json({ error: 'Access Forbidden' });
   });
-
-  logger.log('debug', 'App configured.');
 
   return app;
 };
