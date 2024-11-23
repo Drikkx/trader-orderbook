@@ -15,13 +15,12 @@ export async function startApi() {
 
   const port = process.env.PORT || 5000;
 
-  // Track SETTINGS frame count here if you still want to limit them
   server.on('session', (session) => {
     let settingsFrameCount = 0;
-    const MAX_SETTINGS_FRAMES = 10; // Example limit
+    const MAX_SETTINGS_FRAMES = 10;
 
     session.on('frameError', (type, code) => {
-      if (type === 4) { // NGHTTP2_SETTINGS frame type
+      if (type === 4) {
         settingsFrameCount++;
         if (settingsFrameCount > MAX_SETTINGS_FRAMES) {
           console.log('A session has exceeded the SETTINGS frame limit.');
