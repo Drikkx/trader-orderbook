@@ -1,88 +1,83 @@
-console.log('App bootstrapping...')
-import express from 'express'
-import helmet from 'helmet'
-import cors from 'cors'
-import compression from 'compression'
-import bodyParser from 'body-parser'
-import cron from 'node-cron'
-import { createOrderbookRouter } from '../../api/orderbook'
-import { getLoggerForService, ServiceNamesLogLabel } from '../../logger'
-import { checkAndUpdateAllOrderStatuses } from '../../api/status-order-check'
-import { cleanUpClosedOrders } from '../../api/clean-db'
-import { startEventListeners } from '../../api/events-listener'
-import rateLimit from 'express-rate-limit'
+import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import compression from 'compression';
+import bodyParser from 'body-parser';
+import cron from 'node-cron';
+import { createOrderbookRouter } from '../../api/orderbook';
+import { getLoggerForService, ServiceNamesLogLabel } from '../../logger';
+import { checkAndUpdateAllOrderStatuses } from '../../api/status-order-check';
+import { cleanUpClosedOrders } from '../../api/clean-db';
+import { startEventListeners } from '../../api/events-listener';
+import rateLimit from 'express-rate-limit';
+import http2Express from 'http2-express-bridge'; // Make sure to import this
 
-const logger = getLoggerForService(ServiceNamesLogLabel['api-web'])
+const logger = getLoggerForService(ServiceNamesLogLabel['api-web']);
 
 const bootstrapApp = async () => {
-  const isProduction = process.env.NODE_ENV === 'production'
-  logger.debug('Initializing API web service express app...', { isProduction })
+  const isProduction = process.env.NODE_ENV === 'production';
+  logger.debug('Initializing API web service express app...', { isProduction });
 
-  // Express
-  const app = express()
+  // Use http2Express to create an app that's HTTP/2 compatible
+  const app = http2Express(express);
 
-  app.use(helmet())
-  app.enable('trust proxy')
-  app.use(compression())
-  app.use(express.json())
-  app.use(cors())
-  app.use(bodyParser.urlencoded({ extended: true }))
-  app.use(bodyParser.json())
+  app.use(helmet());
+  app.enable('trust proxy');
+  app.use(compression());
+  app.use(express.json());
+  app.use(cors());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
 
   // Rate Limiter
   const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limite each IP to 100 requests per windowMs
-    standardHeaders: true, // Add headers with limit information
-    legacyHeaders: false, // Don't add X-RateLimit-* headers
-    keyGenerator: function (req) {
+    max: 100, // Limit each IP to 100 requests per windowMs
+    standardHeaders: true,
+    legacyHeaders: false,
+    keyGenerator: (req: express.Request) => {
       const forwarded = req.headers['x-forwarded-for'];
       const ip = Array.isArray(forwarded) ? forwarded[0] : forwarded;
       return ip || req.socket.remoteAddress || 'default';
     },
   });
 
-  // Set up rate limiter
   app.use(limiter);
 
-  // Set up routes and middlewares
   // Basic Healthchecks
-  app.get('/', (_, res) => res.sendStatus(200))
-  app.get('/v2', (_, res) => res.sendStatus(200))
-  app.get('/healthcheck', (_, res) => res.sendStatus(200))
-  app.get('/status', (_, res) => res.sendStatus(200))
+  app.get('/', (_, res) => res.sendStatus(200));
+  app.get('/v2', (_, res) => res.sendStatus(200));
+  app.get('/healthcheck', (_, res) => res.sendStatus(200));
+  app.get('/status', (_, res) => res.sendStatus(200));
 
-  app.use('/orderbook', createOrderbookRouter())
+  app.use('/orderbook', createOrderbookRouter());
 
-  // Planifiez la tâche pour s'exécuter une fois par jour à minuit
   cron.schedule('0 0 * * *', async () => {
     await checkAndUpdateAllOrderStatuses().then(() => {
-      console.log('Daily order status update task executed.')
-    })
+      console.log('Daily order status update task executed.');
+    });
 
     await cleanUpClosedOrders().then(() => {
-      console.log('Daily closed order cleanup task executed.')
-    })
-  })
+      console.log('Daily closed order cleanup task executed.');
+    });
+  });
 
-  startEventListeners()
+  startEventListeners();
 
   // Error middlewares
   app.use((_req, _res, next) => {
-    const err = new Error('Not Found') as any
-    err.status = 404
-    next(err)
-  })
+    const err = new Error('Not Found') as any;
+    err.status = 404;
+    next(err);
+  });
 
-  app.use((error, _req, res, _next) => {
-    res.status(error.status || 500)
-    res.json({ ...error })
-  })
+  app.use((error: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    res.status(error.status || 500).json({ ...error });
+  });
 
-  // Config done! Ready to go.
-  logger.log('debug', 'App configured.')
+  logger.log('debug', 'App configured.');
 
-  return app
-}
+  return app;
+};
 
-export { bootstrapApp }
+export { bootstrapApp };
