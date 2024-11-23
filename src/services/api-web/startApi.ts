@@ -4,9 +4,9 @@ import fs from 'fs';
 
 // SSL/TLS configuration
 const options = {
-  key: fs.readFileSync('path/to/your/private/key.pem'),
-  cert: fs.readFileSync('path/to/your/certificate.crt')
-};
+    key: fs.readFileSync('server-key.pem'),
+    cert: fs.readFileSync('server-cert.pem')
+  };
 
 export async function startApi() {
   const app = await bootstrapApp();
