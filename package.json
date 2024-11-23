@@ -55,6 +55,7 @@
     "express-rate-limit": "^7.1.5",
     "forlootandglory-nft-swap-sdk": "^0.0.3",
     "helmet": "^5.0.2",
+    "http2-express-bridge": "^1.0.7",
     "ioredis": "^5.0.4",
     "lodash": "^4.17.21",
     "logdna-winston": "^4.0.1",
