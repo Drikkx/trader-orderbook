@@ -32,50 +32,6 @@ async function updateOrderStatus(nonce: BigNumber, newStatus: string) {
 }
 
 export function startEventListeners() {
-  const providerCalypsoTestnet = new ethers.providers.JsonRpcProvider(JSON_RPC[CHAIN_IDS.SKALE_TESTNET])
-  const contractCalypsoTestnet = new ethers.Contract(
-    addresses[CHAIN_IDS.SKALE_TESTNET]?.exchange.toString()!,
-    IZeroEx.compilerOutput.abi,
-    providerCalypsoTestnet
-  )
-
-  contractCalypsoTestnet.on(
-    contractCalypsoTestnet.filters.ERC1155OrderFilled(),
-    async (
-      direction,
-      maker,
-      taker,
-      nonce,
-      erc20Token,
-      erc20FillAmount,
-      erc1155Token,
-      erc1155TokenId,
-      erc1155FillAmount,
-      matcher
-    ) => {
-      console.log('ERC1155 Order Filled:', { maker, nonce })
-      await updateOrderStatus(nonce, 'filled')
-    }
-  )
-
-  contractCalypsoTestnet.on(contractCalypsoTestnet.filters.ERC1155OrderCancelled(), async (maker, nonce) => {
-    console.log('ERC1155 Order Cancelled:', { maker, nonce })
-    await updateOrderStatus(nonce, 'cancelled')
-  })
-
-  contractCalypsoTestnet.on(
-    contractCalypsoTestnet.filters.ERC721OrderFilled(),
-    async (direction, maker, taker, nonce, erc20Token, erc20TokenAmount, erc721Token, erc721TokenId, matcher) => {
-      console.log('ERC721 Order Filled:', { maker, nonce })
-      await updateOrderStatus(nonce, 'filled')
-    }
-  )
-
-  contractCalypsoTestnet.on(contractCalypsoTestnet.filters.ERC721OrderCancelled(), async (maker, nonce) => {
-    console.log('ERC721 Order Cancelled:', { maker, nonce })
-    await updateOrderStatus(nonce, 'cancelled')
-  })
-
   // NEBULA TESTNET
   const providerNebulaTestnet = new ethers.providers.JsonRpcProvider(JSON_RPC[CHAIN_IDS.NEBULA_TESTNET])
   const contractNebulaTestnet = new ethers.Contract(

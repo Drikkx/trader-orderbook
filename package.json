@@ -6,8 +6,6 @@
   "private": true,
   "license": "MIT",
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.8.0",
-    "@cloudflare/wrangler": "^1.19.12",
     "@typechain/ethers-v5": "^10.1.0",
     "@types/express": "^4.17.13",
     "@types/ioredis": "^4.28.10",
@@ -31,7 +29,6 @@
     "webpack": "^5.72.0"
   },
   "dependencies": {
-    "@alch/alchemy-web3": "^1.4.6",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/address": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
@@ -40,8 +37,6 @@
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/providers": "^5.7.0",
     "@prisma/client": "4.0.0",
-    "@vercel/fetch": "^6.2.0",
-    "@zoralabs/nft-metadata": "^1.2.6",
     "base-64": "^1.0.0",
     "body-parser": "^1.20.0",
     "cabin": "^9.1.2",
@@ -86,9 +81,8 @@
     "typecheck": "tsc --noEmit",
     "prisma:pull": "npx prisma db pull",
     "prisma:generate": "npx prisma generate",
-    "zod:generate": "yarn ts-to-zod src/types.ts src/validations.ts",
+    "prisma:studio" : "npx prisma studio",
     "prisma:sync": "yarn prisma:pull && yarn prisma:generate",
-    "generate-types": "typechain --out-dir 'src/contracts' --target=ethers-v5 'src/abis/**/*.json'",
     "start": "node dist/index.js",
     "dev-bot": "ts-node-dev ./src/discord/bot.ts",
     "start-bot": "node dist/discord/bot.js"

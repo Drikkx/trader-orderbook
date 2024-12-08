@@ -1,29 +1,9 @@
 
-// export type FeeStruct = {
-//   recipient: string;
-//   amount: BigNumberish;
-//   feeData: string | Array<number>;
-// };
-
 export type FeeStructSerialized = {
   recipient: string
   amount: string
   feeData: string
 }
-
-// export type ERC1155OrderStruct = {
-//   direction: BigNumberish;
-//   maker: string;
-//   taker: string;
-//   expiry: BigNumberish;
-//   nonce: BigNumberish;
-//   erc20Token: string;
-//   erc20TokenAmount: BigNumberish;
-//   fees: FeeStruct[];
-//   erc1155Token: string;
-//   erc1155TokenId: BigNumberish;
-//   erc1155TokenAmount: BigNumberish;
-// };
 
 export type ERC1155OrderStructSerialized = {
   direction: number
@@ -38,19 +18,6 @@ export type ERC1155OrderStructSerialized = {
   erc1155TokenId: string
   erc1155TokenAmount: string
 }
-
-// export type ERC721OrderStruct = {
-//   direction: BigNumberish;
-//   maker: string;
-//   taker: string;
-//   expiry: BigNumberish;
-//   nonce: BigNumberish;
-//   erc20Token: string;
-//   erc20TokenAmount: BigNumberish;
-//   fees: FeeStruct[];
-//   erc721Token: string;
-//   erc721TokenId: BigNumberish;
-// };
 
 export type ERC721OrderStructSerialized = {
   direction: number
