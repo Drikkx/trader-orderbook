@@ -4,6 +4,3 @@
 export { ERC20__factory } from './ERC20__factory'
 export { ERC721__factory } from './ERC721__factory'
 export { IZeroEx__factory } from './IZeroEx__factory'
-export { TraitRouter__factory } from './TraitRouter__factory'
-export { TraitValidator__factory } from './TraitValidator__factory'
-export { Trustus__factory } from './Trustus__factory'
