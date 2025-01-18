@@ -1,4 +1,4 @@
-import { NftSwapV4, OrderStatusV4 } from 'forlootandglory-nft-swap-sdk'
+import { NftSwapV4, OrderStatusV4 } from 'flag-nft-swap-sdk'
 import { Router, Response } from 'express'
 import { JsonRpcBatchProvider } from '@ethersproject/providers'
 import { isHexString } from '@ethersproject/bytes'
