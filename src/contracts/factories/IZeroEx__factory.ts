@@ -342,7 +342,7 @@ const _abi = [
         internalType: 'uint256',
         name: 'erc721TokenId',
         type: 'uint256',
-      }
+      },
     ],
     name: 'ERC721OrderPreSigned',
     type: 'event',
@@ -7699,7 +7699,7 @@ const _abi = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+]
 
 export class IZeroEx__factory {
   static readonly abi = _abi

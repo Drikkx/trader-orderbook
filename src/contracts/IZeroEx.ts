@@ -1294,18 +1294,7 @@ export interface ERC721OrderPreSignedEventObject {
   erc721TokenId: BigNumber
 }
 export type ERC721OrderPreSignedEvent = TypedEvent<
-  [
-    number,
-    string,
-    string,
-    BigNumber,
-    BigNumber,
-    string,
-    BigNumber,
-    LibNFTOrder.FeeStructOutput[],
-    string,
-    BigNumber
-  ],
+  [number, string, string, BigNumber, BigNumber, string, BigNumber, LibNFTOrder.FeeStructOutput[], string, BigNumber],
   ERC721OrderPreSignedEventObject
 >
 

@@ -1,4 +1,4 @@
-import { NftSwapV4, OrderStatusV4 } from 'forlootandglory-nft-swap-sdk';
+import { NftSwapV4, OrderStatusV4 } from 'forlootandglory-nft-swap-sdk'
 import { Router, Response } from 'express'
 import { JsonRpcBatchProvider } from '@ethersproject/providers'
 import { isHexString } from '@ethersproject/bytes'
@@ -10,14 +10,14 @@ import { signedNftOrderV4SerializedSchema } from '../validations'
 import { createApiError } from '../errors/api-error'
 import { modelDbOrderToSdkOrder, nftOrderToDbModel } from '../services/api-web/utils/order-parsing'
 import { getJsonRpcUrlByChainId, getZeroExContract } from '../default-config'
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events'
 
 export enum TradeDirection {
   SellNFT = 0,
   BuyNFT = 1,
 }
 
-export const appEvents = new EventEmitter();
+export const appEvents = new EventEmitter()
 
 export interface OrderPayload {
   erc20Token: string
@@ -69,21 +69,6 @@ const createOrderbookRouter = () => {
 
   orderRouter.get('/', (_, res) => res.sendStatus(200))
   orderRouter.get('/healthcheck', (_, res) => res.sendStatus(200))
-
-  interface SearchOrdersSqlFilterParams {
-    erc20_token: string
-    nft_token_id: string
-    nft_token: string
-    nft_type: string
-    chain_id: string
-    maker: string
-    taker: string
-    nonce: string
-    order_status: null | 'filled' | 'expired' | 'cancelled'
-    direction: string
-    order_valid: boolean
-    metadata: string
-  }
 
   interface SearchOrdersQueryParams {
     nftTokenId: string | string[]
@@ -319,51 +304,47 @@ const createOrderbookRouter = () => {
     }
 
     const buildMetadataFilter = (filters: any[]): Prisma.orders_with_latest_statusWhereInput[] => {
-      return filters.map(filter => {
-        const condition: Prisma.JsonObject = {};
+      return filters.map((filter) => {
+        const condition: Prisma.JsonObject = {}
         switch (filter.operation) {
           case 'equals':
-            condition['equals'] = { [filter.key]: filter.value };
-            break;
+            condition['equals'] = { [filter.key]: filter.value }
+            break
           case 'in':
-            // Remarque : Adaptez en fonction de la capacité de votre base de données et Prisma
-            condition['array_contains'] = { [filter.key]: filter.value };
-            break;
+            condition['array_contains'] = { [filter.key]: filter.value }
+            break
           case 'range':
-            // Prisma ne supporte pas directement 'range' sur JSON; ceci est un exemple hypothétique
-            // Vous devrez peut-être ajuster cette logique en fonction de vos besoins spécifiques
-            condition['gte'] = { [filter.key]: filter.value.min };
-            condition['lte'] = { [filter.key]: filter.value.max };
-            break;
+            condition['gte'] = { [filter.key]: filter.value.min }
+            condition['lte'] = { [filter.key]: filter.value.max }
+            break
         }
         return {
-          app_metadata: condition
-        };
-      });
-    };
+          app_metadata: condition,
+        }
+      })
+    }
 
-    const filtersString = queryParams.metadata;
+    const filtersString = queryParams.metadata
     if (filtersString) {
       try {
-        const filters = JSON.parse(filtersString);
-        const metadataFilters = buildMetadataFilter(filters);
+        const filters = JSON.parse(filtersString)
+        const metadataFilters = buildMetadataFilter(filters)
         // Ajout des filtres de métadonnées à filterParamsAND
-        filterParamsAND.push(...metadataFilters);
+        filterParamsAND.push(...metadataFilters)
       } catch (error) {
-        console.error('Error parsing or applying metadata filters:', error);
+        console.error('Error parsing or applying metadata filters:', error)
         // Gérez l'erreur comme il se doit
       }
     }
-
 
     const orderValidity = queryParams.valid?.toString()
     if (orderValidity === 'all') {
       //
     } else {
       // By default, only show valid orders
-      // filterParamsAND.push({
-      //   order_valid: true,
-      // })
+      filterParamsAND.push({
+        order_valid: true,
+      })
     }
 
     // Limit for query
@@ -622,8 +603,7 @@ const createOrderbookRouter = () => {
       delete (dbResult as any).system_metadata
 
       const orderPayload = orderToOrderPayload(dbResult!)
-      appEvents.emit('notifyDiscord', { order: orderDb },
-      );
+      appEvents.emit('notifyDiscord', { order: orderDb })
       return res.status(200).json(orderPayload)
     } catch (e: any) {
       console.log(e)
@@ -634,10 +614,10 @@ const createOrderbookRouter = () => {
   })
 
   orderRouter.post('/orders/refreshMetadata', async (req, res) => {
-    const { nonce, newMetadata } = req.body;
+    const { nonce, newMetadata } = req.body
 
     if (!nonce || !newMetadata) {
-      return res.status(400).json({ message: "Nonce and newMetadata are required." });
+      return res.status(400).json({ message: 'Nonce and newMetadata are required.' })
     }
 
     try {
@@ -645,36 +625,35 @@ const createOrderbookRouter = () => {
       await prisma.orders_v4_nfts.updateMany({
         where: { nonce },
         data: { app_metadata: newMetadata },
-      });
+      })
 
       // Mise à jour dans la deuxième collection
       const updateResult = await prisma.orders_with_latest_status.updateMany({
         where: { nonce },
         data: { app_metadata: newMetadata },
-      });
+      })
 
       if (updateResult.count === 0) {
-        return res.status(404).json({ message: "Order not found with the provided nonce." });
+        return res.status(404).json({ message: 'Order not found with the provided nonce.' })
       }
 
       // Récupérer l'ordre mis à jour pour la réponse, en supposant que l'ordre est unique par nonce
       const dbResult = await prisma.orders_with_latest_status.findFirst({
         where: { nonce },
-      });
+      })
 
       if (!dbResult) {
-        return res.status(404).json({ message: "Failed to fetch the updated order from the database." });
+        return res.status(404).json({ message: 'Failed to fetch the updated order from the database.' })
       }
 
       // Convertir l'ordre de la base de données en payload de réponse
-      const orderPayload = orderToOrderPayload(dbResult);
-      return res.status(200).json(orderPayload);
+      const orderPayload = orderToOrderPayload(dbResult)
+      return res.status(200).json(orderPayload)
     } catch (error) {
-      console.error('API: Error refreshing order metadata', { nonce, error });
-      return res.status(500).json({ message: "An error occurred while refreshing the order metadata." });
+      console.error('API: Error refreshing order metadata', { nonce, error })
+      return res.status(500).json({ message: 'An error occurred while refreshing the order metadata.' })
     }
-  });
-
+  })
 
   return orderRouter
 }

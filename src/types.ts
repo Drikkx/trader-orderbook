@@ -1,4 +1,3 @@
-
 export type FeeStructSerialized = {
   recipient: string
   amount: string

@@ -13,7 +13,7 @@ const logger = winston.createLogger({
 })
 
 export enum ServiceNamesLogLabel {
-  'api-web' = 'api-web'
+  'api-web' = 'api-web',
 }
 
 const getLoggerForService = (serviceName: ServiceNamesLogLabel) => {
