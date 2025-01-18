@@ -2,7 +2,6 @@ import { Client, EmbedBuilder, TextChannel } from 'discord.js'
 import { appEvents } from '../api/orderbook'
 import { NftOrderV4DatabaseModel } from '../types-complex'
 import StepAsset from '../discord/store/contracts/StepAsset.json'
-import { forEach } from 'lodash'
 
 interface Data {
   order: NftOrderV4DatabaseModel
