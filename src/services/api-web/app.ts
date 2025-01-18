@@ -54,10 +54,10 @@ const bootstrapApp = async () => {
     if (isDevMode) {
       return true; // Allow all origins in development mode
     }
-    const allowedDomains = ['testnet.forlootandglory.io', 'game.forlootandglory.io', 'market.forlootandglory.io'];
-    if (!origin) return false;
-    const originDomain = new URL(origin).hostname;
-    return allowedDomains.includes(originDomain);
+    // const allowedDomains = ['testnet.forlootandglory.io', 'game.forlootandglory.io', 'market.forlootandglory.io'];
+    // if (!origin) return false;
+    // const originDomain = new URL(origin).hostname;
+    // return allowedDomains.includes(originDomain);
   }
 
   // Basic Healthchecks
