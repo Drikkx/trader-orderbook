@@ -1,8 +1,7 @@
 {
-  "name": "trader-orderbook-api",
+  "name": "orderbook-api",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "johnrjj",
   "private": true,
   "license": "MIT",
   "devDependencies": {
@@ -75,9 +74,6 @@
     "lint:prettier": "prettier --check \"src/**/*.{ts,js,json,yml,md}\"",
     "clean": "rimraf dist",
     "dev": "ts-node-dev --transpile-only --files ./src/index.ts",
-    "scriptthing": "TS_NODE=true NODE_OPTIONS=\"-r ts-node/register\" node ./src/scripts/test.ts",
-    "test": "jest --passWithNoTests",
-    "test:watch": "jest --watch",
     "typecheck": "tsc --noEmit",
     "prisma:pull": "npx prisma db pull",
     "prisma:generate": "npx prisma generate",

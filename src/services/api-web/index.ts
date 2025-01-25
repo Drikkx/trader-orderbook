@@ -9,7 +9,7 @@ const logger = getLoggerForService(ServiceNamesLogLabel['api-web'])
 bootstrapApp().then((app) => {
   app.listen(PORT, () => {
     logger.info(
-      `🚀 Trader.xyz Orderbook API service instance started. Listening on port ${PORT} ( http://localhost:${PORT}/healthcheck ) 🚀`
+      `🚀 Orderbook API service instance started. Listening on port ${PORT} 🚀`
     )
   })
 })

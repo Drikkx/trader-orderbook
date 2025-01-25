@@ -8,7 +8,6 @@ import { createOrderbookRouter } from '../../api/orderbook'
 import { checkAndUpdateAllOrderStatuses } from '../../api/status-order-check'
 import { cleanUpClosedOrders } from '../../api/clean-db'
 import { startEventListeners } from '../../api/events-listener'
-import rateLimit from 'express-rate-limit'
 
 const bootstrapApp = async () => {
   const app = express()
@@ -51,13 +50,14 @@ const bootstrapApp = async () => {
 
   // Function to check if the origin is in the whitelist
   function isAllowedOrigin(origin) {
-    if (isDevMode) {
-      return true; // Allow all origins in development mode
-    }
-    const allowedDomains = ['testnet.forlootandglory.io', 'game.forlootandglory.io', 'market.forlootandglory.io'];
-    if (!origin) return false;
-    const originDomain = new URL(origin).hostname;
-    return allowedDomains.includes(originDomain);
+    // if (isDevMode) {
+    //   return true // Allow all origins in development mode
+    // }
+    // const allowedDomains = ['testnet.forlootandglory.io', 'game.forlootandglory.io', 'market.forlootandglory.io']
+    // if (!origin) return false
+    // const originDomain = new URL(origin).hostname
+    // return allowedDomains.includes(originDomain)
+    return true
   }
 
   // Basic Healthchecks
