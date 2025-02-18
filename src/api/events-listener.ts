@@ -77,7 +77,7 @@ export function startEventListeners() {
   })
 
   // NEBULA MAINNET
-  const providerNebulaMainnet = new ethers.providers.JsonRpcProvider(JSON_RPC[CHAIN_IDS.NEBULA_MAINNET])
+  const providerNebulaMainnet = new ethers.providers.JsonRpcProvider('https://green-giddy-denebola-indexer.skalenodes.com:10136/')
   const contractNebulaMainnet = new ethers.Contract(
     addresses[CHAIN_IDS.NEBULA_MAINNET]?.exchange.toString()!,
     IZeroEx.compilerOutput.abi,
