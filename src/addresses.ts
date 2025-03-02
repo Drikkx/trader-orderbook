@@ -5,7 +5,7 @@ export interface AddressesForChain {
 
 const addresses: { [key: string]: AddressesForChain | undefined } = {
   '37084624': {
-    exchange: '0xb68ae56fEf0D8d457C197B1f1Ea01d276f78F76F',
+    exchange: '0xF9eB389701A4f2227998058e502fF9c360689b57',
     wrappedNativeToken: '0xc778417e063141139fce010982780140aa0cd5ab',
   },
   '1482601649': {
