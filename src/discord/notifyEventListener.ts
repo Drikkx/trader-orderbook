@@ -2,6 +2,7 @@ import { Client, EmbedBuilder, TextChannel } from 'discord.js'
 import { appEvents } from '../api/orderbook'
 import { NftOrderV4DatabaseModel } from '../types-complex'
 import StepAsset from '../discord/store/contracts/StepAsset.json'
+import { formatUnits } from 'ethers/lib/utils'
 
 interface Data {
   order: NftOrderV4DatabaseModel
@@ -70,7 +71,7 @@ export const notifyEventListener = (bot: Client) => {
 
           embed.addFields({
             name: `Price`,
-            value: `${price.toFixed(6)}`,
+            value: `${formatUnits(price, 6)}`,
           })
         } else {
           embed.addFields({
@@ -80,7 +81,7 @@ export const notifyEventListener = (bot: Client) => {
 
           embed.addFields({
             name: `Price`,
-            value: `${price.toFixed(6)}`,
+            value: `${formatUnits(price, 6)}`,
           })
         }
 
