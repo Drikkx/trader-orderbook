@@ -23,6 +23,18 @@ async function checkOrderStatus(order: orders_with_latest_status): Promise<'open
 
 // Fonction pour mettre à jour le statut d'une commande dans la base de données
 async function updateOrderStatus(nonce: string, newStatus: 'open' | 'filled' | 'expired' | 'cancelled'): Promise<void> {
+
+  // if statut is expired or cancelled, delete the order from the database
+  if (newStatus === 'expired' || newStatus === 'cancelled') {
+    await prisma.orders_with_latest_status.delete({
+      where: { nonce: nonce },
+    })
+    await prisma.orders_v4_nfts.deleteMany({
+      where: { nonce: nonce },
+    })
+    return
+  }
+
   await prisma.orders_with_latest_status.update({
     where: { nonce: nonce },
     data: { order_status: newStatus },

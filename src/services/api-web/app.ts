@@ -6,7 +6,6 @@ import bodyParser from 'body-parser'
 import cron from 'node-cron'
 import { createOrderbookRouter } from '../../api/orderbook'
 import { checkAndUpdateAllOrderStatuses } from '../../api/status-order-check'
-import { cleanUpClosedOrders } from '../../api/clean-db'
 import { startEventListeners } from '../../api/events-listener'
 
 const bootstrapApp = async () => {
@@ -70,7 +69,6 @@ const bootstrapApp = async () => {
 
   cron.schedule('0 0 * * *', async () => {
     await checkAndUpdateAllOrderStatuses().then(() => console.log('Daily order status update task executed.'))
-    await cleanUpClosedOrders().then(() => console.log('Daily closed order cleanup task executed.'))
   })
 
   startEventListeners()
